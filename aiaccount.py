@@ -3,7 +3,6 @@ os.system(
     "pip install temp-mails requests beautifulsoup4 lxml websocket-client==1.7.0 --quiet"
 )
 from temp_mails import Tenminutemail_one
-from Hastebin import Hastebin
 import requests
 def makeaccount():
     mail = Tenminutemail_one()
