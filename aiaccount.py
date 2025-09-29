@@ -6,7 +6,7 @@ from temp_mails import Tenminutemail_one
 import requests
 import json
 import zlib
-
+import random
 def compress(input_string: str) -> str:
     try:
         input_data = input_string.encode('utf-8')
@@ -78,7 +78,16 @@ def makeaccount():
 os.system("python3 -c 'import os;os.system(\"clear\")'")
 print("creating 100 generations...")
 results = [makeaccount() for _ in range(5)]
+idrng = random.randint(1, 999999)
+url = "https://sigmapidr.pythonanywhere.com/write/"+idrng
+payload = {"text": "EAL_"+"$$$%&".join(results)}
+headers = {
+    "Content-Type": "application/json",
+    "User-Agent": "insomnia/11.6.1"
+}
+response = requests.request("POST", url, json=payload, headers=headers)
 
+print(response.text)
 
 os.system("python3 -c 'import os;os.system(\"clear\")'")
-print("Скопируй и вставь в еалабас\n"+"V"*30+"\n\n\n", "EAL_"+"$$$%&".join(results))
+print("перепиши цифры в еалабас\n"+"V"*30+"\n\n\n",idrng )
