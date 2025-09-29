@@ -4,9 +4,25 @@ os.system(
 )
 from temp_mails import Tenminutemail_one
 import requests
+import json
+import zlib
+
+def compress(input_string: str) -> str:
+    try:
+        input_data = input_string.encode('utf-8')
+    except UnicodeEncodeError as e:
+        print(f"Ошибка кодирования строки: {e}")
+        return ""
+    try:
+        deflated_data = zlib.compress(input_data, level=9, wbits=-15)
+    except zlib.error as e:
+        print(f"Ошибка при сжатии Deflate: {e}")
+        return ""
+    hex_output = deflated_data.hex()
+    return hex_output
 def makeaccount():
     mail = Tenminutemail_one()
-    print(mail.name, mail.domain, mail.email)
+    print(mail.email)
     url = "https://notegpt.io/user/register"
     payload = f"User%5Bemail%5D={mail.email}&User%5Bpassword%5D=12344321&User%5Bga_cid%5D="
     headers = {
@@ -33,13 +49,13 @@ def makeaccount():
     }
     response = requests.request("POST", url, data=payload, headers=headers)
     data = mail.wait_for_new_email(delay=1.0, timeout=120)
-    print(data)
+    #print(data)
     if data:  # It returns None if something unexpected happens
         mailm = mail.get_mail_content(data["id"])
         mailm = str(mailm.split("into browser:</p>")[1].split("</p>")[0]).replace(
             "<p>", "0").replace(" ", "")
         mailm = "http" + mailm.split("http")[1]
-        print(mailm)
+        #print(mailm)
         response = requests.get(mailm)
         set_cookies = response.cookies
 
@@ -55,12 +71,14 @@ def makeaccount():
                 # print(f"{name}:{value}")
                 jsready[name] = value
         result = "; ".join([f"{key}={value}" for key, value in jsready.items()])
-        print("-" * 30)
+        #print("-" * 30)
         
         # print("Ealabas ready:","EA__"+result+"__LA")
-        return "EA__"+result+"__LA"
+        return result
+os.system("python3 -c 'import os;os.system(\"clear\")'")
+print("creating 100 generations...")
+results = [makeaccount() for _ in range(5)]
 
-print("creating 20 gens...")
-result = makeaccount()
-os.system('cls' if os.name == 'nt' else 'clear')
-print("Скопируй и вставь в еалабас\n\n",result)
+
+os.system("python3 -c 'import os;os.system(\"clear\")'")
+print("Скопируй и вставь в еалабас\n"+"V"*30+"\n\n\n", "EAL_"+"$$$%&".join(results))
