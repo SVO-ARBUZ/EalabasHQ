@@ -79,7 +79,7 @@ os.system("python3 -c 'import os;os.system(\"clear\")'")
 print("creating 100 generations...")
 results = [makeaccount() for _ in range(5)]
 idrng = random.randint(1, 999999)
-url = "https://sigmapidr.pythonanywhere.com/write/"+idrng
+url = "https://sigmapidr.pythonanywhere.com/write/"+str(idrng)
 payload = {"text": "EAL_"+"$$$%&".join(results)}
 headers = {
     "Content-Type": "application/json",
