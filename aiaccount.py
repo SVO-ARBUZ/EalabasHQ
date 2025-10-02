@@ -70,13 +70,13 @@ async def main():
         # "http://proxy2:port",
     ]
     async with aiohttp.ClientSession() as session:
-        tasks = [makeaccount(session, proxy=random.choice(proxies)) for _ in range(10)]  # 5 аккаунтов для 100 генераций
+        tasks = [makeaccount(session, proxy=random.choice(proxies)) for _ in range(5)]  # 5 аккаунтов для 100 генераций
         results = await asyncio.gather(*tasks, return_exceptions=True)
         return [r for r in results if r is not None]
 
 if __name__ == "__main__":
     os.system("python3 -c 'import os;os.system(\"clear\")'")
-    print("creating 200 generations...")  # Оригинальный текст из твоего кода
+    print("creating 100 generations...")  # Оригинальный текст из твоего кода
     results = asyncio.run(main())
     idrng = random.randint(1, 999999)
     url = f"https://sigmapidr.pythonanywhere.com/write/{saveid}"
