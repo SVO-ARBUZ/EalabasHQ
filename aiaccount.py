@@ -1,6 +1,6 @@
 # Установка всех необходимых пакетов перед импортами
 import random
-saveid = random.randint(0, 999999)
+saveid = random.randint(10000, 99999)
 import os
 os.system("pip install temp-mails requests beautifulsoup4 lxml websocket-client==1.7.0 aiohttp --quiet")
 
